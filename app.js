@@ -3,7 +3,7 @@ const https = require('https');
 const port = 8080;
 const app = express();
 const authenticateToken = require('./src/middleware/authenticateToken');
-//const fs = require('fs');//file system
+const fs = require('fs');//file system
 //const sqlite3 = require('sqlite3');
 //const db = new sqlite3.Database('../file_vault_db/file_vault.db');
 

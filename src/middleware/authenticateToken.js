@@ -8,10 +8,10 @@ function authenticateToken(req, res, next) {
     if(token == null)
         return res.status(401).send('Access denied. No token provided.');
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, JWT_SECRET, (err, user_info) => {
         if (err)
             return res.status(403).send('Invalid token.');
-        req.user = user;
+        req.user = user_info;
         next();//pass control to next middleware/route handler
     })
 

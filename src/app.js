@@ -9,12 +9,14 @@ const db = require('./db.js')
 
 //import routes
 const authRoutes = require('./routes/authRoutes');
+const fileRoutes = require('./routes/filesRoutes.js');
 
 //middleware
 app.use(express.json());
 
 //routes
 app.use('/auth', authRoutes);//includes POST signup, POST login
+app.use('/files', fileRoutes)
 
 app.get('/test',(req, res) => {
     res.status(200).json({ message: 'GET request successful' });

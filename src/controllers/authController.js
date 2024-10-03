@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const generateJWT = require('../utils/generateJWT');
 const db = require('../db.js');
+const fs = require('fs');
 
 const saltRounds = 12;
 
@@ -21,21 +22,31 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         //insert into db
-        db.run(`INSERT INTO users (username, hashed_password) VALUES (?, ?)`,
-            [username, hashedPassword],
-            function(err)
-            {
-                if(err){
-                    return res.status(500).send('Error creating user');
-                }
-                
+        db.run(`INSERT INTO users (username, hashed_password) VALUES (?, ?)`, [username, hashedPassword], function(err)
+        {
+            if(err){
+                return res.status(500).send('Error creating user');
+            }
+            
+            console.log(`Row inserted with username ${username}`);
 
-                console.log(`Row inserted with username ${username}`);
+            const userFolder = '../files/' + this.lastID;
+            //recursive true avoids error if directory exists
+            fs.mkdir(userFolder, {recursive: true}, (err) => {
+                if(err){
+                    return res.status(500).send('Error creating user folder');
+                }
+
+                console.log(`Folder created for ${username}`);
+
 
                 //generate JWT (redirect to login instead)
                 //const token = generateJWT(username);//update to user_id later
                 return res.status(201).json({message: 'User registered successfully' /*token*/});
+
+
             });
+        });
     });
 
     /*

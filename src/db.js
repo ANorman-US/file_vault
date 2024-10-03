@@ -20,7 +20,6 @@ db.run(`
 `);
 
 //file table
-/*
 db.run(`
     CREATE TABLE IF NOT EXISTS files (
         file_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,6 +32,6 @@ db.run(`
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     )
 `);
-*/
+ 
 
 module.exports = db;

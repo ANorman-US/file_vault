@@ -61,9 +61,9 @@ const uploadFile = async (req, res) =>{
 //limit number of rows later maybe
 const searchFiles = async (req, res) => {
     const {keyword} = req.query; //keyword
-    const userId = req.user.userId;
+    const userID = req.user.user_id;
 
-    db.all(`SELECT file_id, filename, file_type FROM files WHERE user_id = ? AND filename LIKE ?`, [userId, `%${keyword}%`], 
+    db.all(`SELECT file_id, filename, file_type FROM files WHERE user_id = ? AND filename LIKE ?`, [userID, `%${keyword}%`], 
         (err, rows) => {
             if (err) {
                 return res.status(500).send('Error retrieving files');
@@ -74,9 +74,9 @@ const searchFiles = async (req, res) => {
 
 //download
 const downloadFile = (req, res) => {
-    const {fileId} = req.params;//pass fileid as route param
+    const {fileID} = req.params;//pass fileid as route param
 
-    db.get(`SELECT file_path FROM files WHERE file_id = ?`, [fileId], (err, row) => {
+    db.get(`SELECT file_path FROM files WHERE file_id = ?`, [fileID], (err, row) => {
         if(err || !row) {
             return res.status(404).send('File not found');
         }
@@ -92,10 +92,10 @@ const downloadFile = (req, res) => {
 
 //delete by id
 const deleteFile = async (req, res) => {
-    const {fileId} = req.params; 
+    const {fileID} = req.params; 
 
     //get filepath from db
-    db.get(`SELECT file_path FROM files WHERE file_id = ?`, [fileId], (err, row) => {
+    db.get(`SELECT file_path FROM files WHERE file_id = ?`, [fileID], (err, row) => {
         if(err || !row) {
             return res.status(404).send('File not found');
         }
@@ -108,7 +108,7 @@ const deleteFile = async (req, res) => {
                 return res.status(500).send('Error deleting file from filesystem');
             }
             //deletion success. now delete from db
-            db.run(`DELETE FROM files WHERE file_id = ?`, [fileId], (err) => {
+            db.run(`DELETE FROM files WHERE file_id = ?`, [fileID], (err) => {
                 if (err) {
                     return res.status(500).send('Error deleting file from database');
                 }
@@ -122,4 +122,4 @@ const deleteFile = async (req, res) => {
 
 
 //exports
-module.exports = {upload, uploadFile};
+module.exports = {upload, uploadFile, searchFiles, downloadFile, deleteFile};

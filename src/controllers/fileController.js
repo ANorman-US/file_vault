@@ -1,4 +1,4 @@
-const db = require('../db'); // Import your database connection
+const db = require('../db');
 const multer = require('multer');
 const fs = require('fs');
 
@@ -56,6 +56,70 @@ const uploadFile = async (req, res) =>{
         res.status(500).send('Error saving file metadata');
     }
 };
+
+//search by name
+//limit number of rows later maybe
+const searchFiles = async (req, res) => {
+    const {keyword} = req.query; //keyword
+    const userId = req.user.userId;
+
+    db.all(`SELECT file_id, filename, file_type FROM files WHERE user_id = ? AND filename LIKE ?`, [userId, `%${keyword}%`], 
+        (err, rows) => {
+            if (err) {
+                return res.status(500).send('Error retrieving files');
+            }
+        res.json(rows);//return rows(id, name, type)
+    });
+};
+
+//download
+const downloadFile = (req, res) => {
+    const {fileId} = req.params;//pass fileid as route param
+
+    db.get(`SELECT file_path FROM files WHERE file_id = ?`, [fileId], (err, row) => {
+        if(err || !row) {
+            return res.status(404).send('File not found');
+        }
+        //file found now download
+        const filePath = row.file_path; // Path to the file
+        res.download(filePath, (err) => {
+            if(err) {
+                return res.status(500).send('Error downloading file');
+            }
+        });
+    });
+};
+
+//delete by id
+const deleteFile = async (req, res) => {
+    const {fileId} = req.params; 
+
+    //get filepath from db
+    db.get(`SELECT file_path FROM files WHERE file_id = ?`, [fileId], (err, row) => {
+        if(err || !row) {
+            return res.status(404).send('File not found');
+        }
+
+        const filePath = row.file_path;
+
+        //delete file
+        fs.unlink(filePath,(err) => {
+            if(err) {
+                return res.status(500).send('Error deleting file from filesystem');
+            }
+            //deletion success. now delete from db
+            db.run(`DELETE FROM files WHERE file_id = ?`, [fileId], (err) => {
+                if (err) {
+                    return res.status(500).send('Error deleting file from database');
+                }
+                res.status(200).send('File deleted successfully');
+            });
+        });
+    });
+};
+
+
+
 
 //exports
 module.exports = {upload, uploadFile};

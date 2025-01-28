@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3');
 
 //connect to db
-const db = new sqlite3.Database('../data/database.sqlite', (err) => {
+const db = new sqlite3.Database('./data/database.sqlite', (err) => {
     if (err) {
         console.error('Error connecting to database:', err.message);
     } else {
@@ -28,9 +28,18 @@ db.run(`
         file_path TEXT NOT NULL,
         file_size INTEGER,
         file_type TEXT,
+        iv BLOB NOT NULL,
         time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     )
+`);
+
+//blacklist tokens
+db.run(`
+   CREATE TABLE IF NOT EXISTS token_blacklist (
+        token TEXT PRIMARY KEY,
+        expires_at DATETIME NOT NULL
+   ) 
 `);
  
 

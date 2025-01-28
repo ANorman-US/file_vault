@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Bank</title>
+    <link rel="stylesheet" href="./styles/dashboard.css">
+</head>
+<body>
+    <div id="dashboard">
+        <!--top tab-->
+        <div id="top-tab">
+            <h1>FileBank</h1>
+            <button id="logout-btn">Logout</button>
+        </div>
+
+        <div id="content">
+            <!-- left panel -->
+            <div id="left-panel">
+                <div class="tab">
+                    <h2>My Files</h2>
+                    <ul>
+                        <li>All Files</li>
+                        <li>Shared with Me</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="main-content">
+                <button id="upload-file-btn">Upload File</button>
+                <input type="file" id="file-input" style="display:none">
+
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search for files" autocomplete="off">
+                    <button id="search-btn">Search</button>
+                </div>
+
+                <div id="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./pages/dashboard.js"></script>
+</body>
+</html>

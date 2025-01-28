@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'secret_key';
+require('dotenv').config();//env variables
+const JWT_SECRET = process.env.JWT_SECRET;
+//console.log("JWT Secret:", JWT_SECRET);
 
 function generateJWT(user_id, username) {
     //username payload, 1 hr expiration. implement extension later

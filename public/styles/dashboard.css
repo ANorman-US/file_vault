@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#dashboard {
+    width: 100%;
+    max-width: 1000px;
+}
+
+#top-tab {
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#top-tab h1 {
+    margin: 0;
+    font-size: 24px;
+    color: black;
+}
+
+#logout-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 8px 15px;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+}
+
+#logout-btn:hover {
+    background-color: #f0f0f0;
+}
+
+#content {
+    display: flex;
+    margin-top: 20px;
+}
+
+#left-panel {
+    width: 200px;
+    border-right: 1px solid #ddd;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.tab {
+    margin-bottom: 20px;
+}
+
+.tab h2 {
+    font-size: 18px;
+    color: black;
+}
+
+.tab ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+.tab ul li {
+    font-size: 16px;
+    color: black;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.tab ul li:hover {
+    color: #444;
+}
+
+#main-content {
+    width: 100%;
+    max-width: 750px;
+    padding-left: 20px;
+}
+
+#upload-file-btn {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+}
+
+#upload-file-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 8px;
+    margin-right: 10px;
+    width: 200px;
+    border: 1px solid black;
+    color: black;
+}
+
+#search-results {
+    margin-top: 20px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin: 5px 0;
+    color: black;
+}
+
+.result-row button {
+    margin-left: 5px;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+}
+
+.result-row button:hover {
+    background-color: #f0f0f0;
+}
